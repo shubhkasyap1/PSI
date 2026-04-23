@@ -2,11 +2,17 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
   backend-tests:
+    name: Backend Tests & Coverage
     runs-on: ubuntu-latest
 
     defaults:
@@ -14,20 +20,36 @@ jobs:
         working-directory: server
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install Light Dependencies
+      - name: Install Backend Dependencies
         run: |
-          pip install fastapi uvicorn pytest pytest-cov httpx
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
 
-      - name: Run Tests
-        run: pytest -v || true
+      - name: Run Backend Tests
+        run: |
+          pytest -v
+
+      - name: Generate Coverage Report
+        run: |
+          pytest --cov=app --cov-branch --cov-report=xml
+
+      - name: Upload Coverage Reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
 
   frontend-build:
+    name: Frontend Build
     runs-on: ubuntu-latest
 
     defaults:
@@ -35,11 +57,16 @@ jobs:
         working-directory: client
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - run: npm install
-      - run: npm run build
+      - name: Install Frontend Dependencies
+        run: npm install
+
+      - name: Build Frontend
+        run: npm run build
