@@ -7,6 +7,10 @@ Built as part of the SDE-1 Programming Assignment. :contentReference[oaicite:0]{
 
 ---
 
+![Coverage](https://codecov.io/gh/shubhkasypa1/PSI/branch/main/graph/badge.svg)
+
+![CI](https://github.com/shubhkasypa1/PSI/actions/workflows/ci.yml/badge.svg)
+
 # 🚀 Features
 
 ## 📄 File Upload Support
