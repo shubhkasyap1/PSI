@@ -11,7 +11,7 @@ def test_chat_no_chunks(mock_chunks, client):
     })
 
     assert r.status_code == 200
-    assert "No relevant" in r.json()["answer"]
+    assert "could not find" in r.json()["answer"].lower()
 
 
 @patch("app.api.routes.summary.extract_text")

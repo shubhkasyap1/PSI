@@ -96,9 +96,9 @@ def test_get_relevant_chunks_success(
 
     fake_index = mock_read.return_value
     fake_index.search.return_value = (
-        None,
+        [[0.15]],
         [[0]]
-    )
+)
 
     result = (
         vector_service
