@@ -2,7 +2,7 @@
 # AI-Powered Document & Multimedia Q&A Web Application
 
 ![Tests](https://github.com/shubhkasyap1/PSI/actions/workflows/tests.yml/badge.svg)
-![Coverage](https://codecov.io/gh/shubhkasyap1/PSI/branch/main/graph/badge.svg?token=a61b13c5-0f5f-440a-97b5-0ae6e54d294f)
+![Coverage](https://codecov.io/gh/shubhkasyap1/PSI/graph/badge.svg?branch=main)
 
 An AI-powered system to upload PDFs, audio, and video, then chat, summarize, and retrieve timestamps.
 
