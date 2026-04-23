@@ -1,13 +1,8 @@
-````md id="readme-final"
 # AI-Powered Document & Multimedia Q&A Web Application
 
-<<<<<<< HEAD
-
 ![Coverage](./coverage.svg)
-=======
-![Tests](https://github.com/shubhkasyap1/PSI/actions/workflows/tests.yml/badge.svg)
 ![Coverage](https://codecov.io/gh/shubhkasyap1/PSI/graph/badge.svg?branch=main)
->>>>>>> b865ce278d5d7fb4d22cc0a8dbca3302b5a8c83e
+
 
 An AI-powered system to upload PDFs, audio, and video, then chat, summarize, and retrieve timestamps.
 
