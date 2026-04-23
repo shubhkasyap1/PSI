@@ -1,4 +1,3 @@
-````md id="readme-final"
 # AI-Powered Document & Multimedia Q&A Web Application
 
 ![Coverage](./coverage.svg)
