@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 from app.services.llm_service import ask_llm
 from app.services.vector_service import get_relevant_chunks
+from app.services.file_service import extract_text
 
 router = APIRouter()
 
@@ -15,24 +16,41 @@ class ChatRequest(BaseModel):
 @router.post("/")
 def chat(req: ChatRequest):
     try:
-        # -----------------------------
-        # Retrieve relevant chunks
-        # -----------------------------
         context_chunks = get_relevant_chunks(
             req.file_id,
             req.question
         )
 
+        # -----------------------------
+        # If no vector results found
+        # fallback to full text
+        # -----------------------------
         if not context_chunks:
+
+            file_data = extract_text(req.file_id)
+
+            if isinstance(file_data, str):
+                answer = ask_llm(
+                    req.question,
+                    file_data[:4000]
+                )
+
+                return {
+                    "question": req.question,
+                    "answer": answer,
+                    "timestamp": None,
+                    "context_used": []
+                }
+
             return {
                 "question": req.question,
-                "answer": "No relevant context found for this file.",
+                "answer": "No useful content found.",
                 "timestamp": None,
                 "context_used": []
             }
 
         # -----------------------------
-        # Build context text for LLM
+        # Build context
         # -----------------------------
         context_texts = []
 
@@ -46,23 +64,18 @@ def chat(req: ChatRequest):
 
         context = "\n".join(context_texts)
 
-        # -----------------------------
-        # Ask LLM
-        # -----------------------------
         answer = ask_llm(
             req.question,
             context
         )
 
-        # -----------------------------
-        # Timestamp support
-        # -----------------------------
         top_result = context_chunks[0]
 
-        if isinstance(top_result, dict):
-            timestamp = top_result.get("timestamp")
-        else:
-            timestamp = None
+        timestamp = (
+            top_result.get("timestamp")
+            if isinstance(top_result, dict)
+            else None
+        )
 
         return {
             "question": req.question,

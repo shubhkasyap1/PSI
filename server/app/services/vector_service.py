@@ -120,11 +120,7 @@ def build_vector_index(file_id: str):
         }
 
 
-def get_relevant_chunks(
-    file_id: str,
-    query: str,
-    top_k: int = 3
-):
+def get_relevant_chunks(file_id: str, query: str, top_k: int = 3):
     try:
         index_path = os.path.join(
             VECTOR_DB_DIR,
@@ -136,15 +132,10 @@ def get_relevant_chunks(
             f"{file_id}.pkl"
         )
 
-        if not os.path.exists(index_path):
+        if not os.path.exists(index_path) or not os.path.exists(meta_path):
             return []
 
-        if not os.path.exists(meta_path):
-            return []
-
-        index = faiss.read_index(
-            index_path
-        )
+        index = faiss.read_index(index_path)
 
         with open(meta_path, "rb") as f:
             metadata = pickle.load(f)
@@ -153,16 +144,17 @@ def get_relevant_chunks(
             [get_embedding(query)]
         ).astype("float32")
 
-        _, indices = index.search(
-            query_vector,
-            top_k
-        )
+        distances, indices = index.search(query_vector, top_k)
 
         results = []
 
-        for i in indices[0]:
+        for pos, i in enumerate(indices[0]):
             if i < len(metadata):
-                results.append(metadata[i])
+                distance = distances[0][pos]
+
+                # keep relevant matches only
+                if distance < 2.5:
+                    results.append(metadata[i])
 
         return results
 
