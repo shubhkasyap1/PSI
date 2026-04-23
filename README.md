@@ -1,8 +1,6 @@
 ````md id="readme-final"
 # AI-Powered Document & Multimedia Q&A Web Application
 
-<<<<<<< HEAD
-
 ![Coverage](./coverage.svg)
 
 An AI-powered system to upload PDFs, audio, and video, then chat, summarize, and retrieve timestamps.
