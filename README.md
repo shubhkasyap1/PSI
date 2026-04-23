@@ -322,7 +322,7 @@ pytest --cov=app --cov-report=term-missing
 Add screenshots or video link here.
 
 ```text
-YouTube / Google Drive Demo Link
+https://drive.google.com/drive/folders/1xP4X2en5KXSBo8YMbcQaRtXLeQAh6CMI?usp=sharing
 ```
 
 ---
