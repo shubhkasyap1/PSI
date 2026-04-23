@@ -1,15 +1,10 @@
 ````md id="readme-final"
 # AI-Powered Document & Multimedia Q&A Web Application
 
-An intelligent full-stack web application that allows users to upload PDF, audio, and video files, ask AI-powered questions about uploaded content, generate summaries, extract timestamps for relevant topics, and jump directly to important moments in media.
+![Tests](https://github.com/shubhkasyap1/PSI/actions/workflows/tests.yml/badge.svg)
+![Coverage](https://codecov.io/gh/shubhkasyap1/PSI/branch/main/graph/badge.svg)
 
-Built as part of the SDE-1 Programming Assignment. :contentReference[oaicite:0]{index=0}
-
----
-
-![Coverage](https://codecov.io/gh/shubhkasypa1/PSI/branch/main/graph/badge.svg)
-
-![CI](https://github.com/shubhkasypa1/PSI/actions/workflows/ci.yml/badge.svg)
+An AI-powered system to upload PDFs, audio, and video, then chat, summarize, and retrieve timestamps.
 
 # 🚀 Features
 
